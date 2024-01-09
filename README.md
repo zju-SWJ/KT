@@ -28,9 +28,9 @@ Python 3.9.16, torch 2.0.1
 
 
 
-## Generate training and validation datasets
+## Generate training and validation datasets (or download [train_data.tar]() and [val_data.tar]() from OneDrive)
 
-1. Modify **generate_sh.py** and run it. It works fine when running 5 processes on a single 2080Ti gpu (~11GB).
+1. Modify **generate_sh.py** and run it. It works fine when running 5 processes on a single 2080Ti GPU (~11GB).
 
 2. Run `nohup sh run.sh &` to generate training dataset.
 
@@ -40,7 +40,7 @@ Python 3.9.16, torch 2.0.1
 
 ## Train the knowledge translation model
 
-The following code can be run on a single A800 gpu (~80GB) and costs roughly a day. You may adjust the **batch_size** and **lr** to run on other gpus.
+The following code can be run on a single A800 GPU (~80GB) and costs roughly a day. You may adjust the **batch_size** and **lr** to run on other GPUs.
 
 ```
 python train.py --gpu_id 0 \
