@@ -16,9 +16,9 @@ Python 3.9.16, torch 2.0.1
 
 **generate_sh.py:** Generate .sh file to run multiply **construct_train.py** files together
 
-**loader.py:** Dataloader for train.py
+**loader.py:** Dataloader for **train.py**
 
-**mixer.py:** Translation model for train.py
+**mixer.py:** Translation model for **train.py**
 
 **net.py:** Models for dataset generation and knowledge translation
 
@@ -40,7 +40,7 @@ Python 3.9.16, torch 2.0.1
 
 ## Train the knowledge translation model
 
-The following code can be run on a single A800 gpu (~80GB) and cost roughly a day. You may adjust the **batch_size** and **lr** to run on other gpus.
+The following code can be run on a single A800 gpu (~80GB) and costs roughly a day. You may adjust the **batch_size** and **lr** to run on other gpus.
 
 ```
 python train.py --gpu_id 0 \
