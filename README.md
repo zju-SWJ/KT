@@ -28,7 +28,7 @@ Python 3.9.16, torch 2.0.1
 
 
 
-## Generate training and validation datasets (or download [train_data.tar]() and [val_data.tar]() from OneDrive)
+## Generate training and validation datasets (or download [train_data.tar](https://1drv.ms/u/s!AgtEQfmiuIJNgot5Ag58uY7GWcqOFA?e=JI8MIE) and [val_data.tar](https://1drv.ms/u/s!AgtEQfmiuIJNgot4HQxWPmfaXes38g?e=gMzaAJ) from OneDrive)
 
 1. Modify **generate_sh.py** and run it. It works fine when running 5 processes on a single 2080Ti GPU (~11GB).
 
