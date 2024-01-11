@@ -1,4 +1,4 @@
-#  Knowledge Translation: Fueling Progress in Model Compression
+#  Knowledge Translation: A New Pathway for Model Compression
 
 
 
