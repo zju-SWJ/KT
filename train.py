@@ -81,9 +81,10 @@ def cal_loss(outputs, targets):
 
 def func_to_detach(inputs):
     assert isinstance(inputs, list)
+    new_inputs = []
     for index in range(len(inputs)):
-        inputs[index] = inputs[index].to(device).detach()
-    return inputs
+        new_inputs.append(inputs[index].to(device).detach())
+    return new_inputs
 
 def eval(Net, testloader):
     Net.eval()
@@ -133,7 +134,7 @@ def train_and_eval():
     LastBlock.eval()
 
     translation_train_set = loader.TrainDataset(base_path=FLAGS.train_path, num=FLAGS.train_data_length)
-    translation_train_loader = torch.utils.data.DataLoader(translation_train_set, batch_size=FLAGS.batch_size, shuffle=True, num_workers=30, pin_memory=True)
+    translation_train_loader = torch.utils.data.DataLoader(translation_train_set, batch_size=FLAGS.batch_size, shuffle=True, num_workers=16, pin_memory=True)
 
     translation_val_set = loader.ValDataset(base_path=FLAGS.val_path, num=100)
     translation_val_loader = torch.utils.data.DataLoader(translation_val_set, batch_size=1, shuffle=False, pin_memory=True)

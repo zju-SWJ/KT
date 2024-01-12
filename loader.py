@@ -5,72 +5,55 @@ import torch
 class TrainDataset(data.Dataset):
     def __init__(self, base_path='/data/train', num=None):
         super().__init__()
-        self.inputs = []
-        self.targets = []
+        self.input_files = []
+        self.target_files = []
 
-        inputs_file_path = os.path.join(base_path, 'inputs')
-        targets_file_path = os.path.join(base_path, 'labels')
-        
         for i in range(num):
-            self.inputs.append(os.path.join(inputs_file_path, str(i) + '.pth'))
-            self.targets.append(os.path.join(targets_file_path, str(i) + '.pth'))
+            self.input_files.append(os.path.join(base_path, 'inputs', str(i) + '.pth'))
+            self.target_files.append(os.path.join(base_path, 'labels', str(i) + '.pth'))
 
-        print('load', len(self.inputs), 'training data')
+        print('load', len(self.input_files), 'training data')
 
     def __getitem__(self, index):
-        input, target = self.inputs[index], self.targets[index]
-        
-        input_name = (input.split('/')[-1]).strip()
-        target_name = (target.split('/')[-1]).strip()
-        assert input_name == target_name
+        input_file, target_file = self.input_files[index], self.target_files[index]
 
-        T_ckpt = torch.load(input, 'cpu')
-        S_ckpt = torch.load(target, 'cpu')
+        input_ckpt = torch.load(input_file, 'cpu')
+        target_ckpt = torch.load(target_file, 'cpu')
 
-        input = (T_ckpt['conv1.weight'].data, T_ckpt['conv2.weight'].data, 
-                    T_ckpt['bn1.weight'].data, T_ckpt['bn1.bias'].data, T_ckpt['bn1.running_mean'].data, T_ckpt['bn1.running_var'].data,
-                    T_ckpt['bn2.weight'].data, T_ckpt['bn2.bias'].data, T_ckpt['bn2.running_mean'].data, T_ckpt['bn2.running_var'].data)
-        target = (S_ckpt['conv1.weight'].data, S_ckpt['conv2.weight'].data)
+        input = [input_ckpt['conv1.weight'].data, input_ckpt['conv2.weight'].data, 
+                    input_ckpt['bn1.weight'].data, input_ckpt['bn1.bias'].data, input_ckpt['bn1.running_mean'].data, input_ckpt['bn1.running_var'].data,
+                    input_ckpt['bn2.weight'].data, input_ckpt['bn2.bias'].data, input_ckpt['bn2.running_mean'].data, input_ckpt['bn2.running_var'].data]
+        target = [target_ckpt['conv1.weight'].data, target_ckpt['conv2.weight'].data]
 
         return input, target
 
     def __len__(self):
-        return len(self.inputs)
+        return len(self.input_files)
 
 class ValDataset(data.Dataset):
     def __init__(self, base_path='/data/val', num=None):
         super().__init__()
-        self.begin_ckpts = []
-        self.complex_ckpts = []
-        self.last_ckpts = []
-
-        begin_path = os.path.join(base_path, 'begin')
-        complex_path = os.path.join(base_path, 'complex')
-        last_path = os.path.join(base_path, 'last')
+        self.begin_files = []
+        self.complex_files = []
+        self.last_files = []
 
         for i in range(num):
-            self.begin_ckpts.append(os.path.join(begin_path, str(i) + '.pth'))
-            self.complex_ckpts.append(os.path.join(complex_path, str(i) + '.pth'))
-            self.last_ckpts.append(os.path.join(last_path, str(i) + '.pth'))
+            self.begin_files.append(os.path.join(base_path, 'begin', str(i) + '.pth'))
+            self.complex_files.append(os.path.join(base_path, 'complex', str(i) + '.pth'))
+            self.last_files.append(os.path.join(base_path, 'last', str(i) + '.pth'))
 
-        print('load', len(self.begin_ckpts), 'validation data')
+        print('load', len(self.begin_files), 'validation data')
 
     def __getitem__(self, index):
-        begin_ckpt, complex_ckpt, last_ckpt = self.begin_ckpts[index], self.complex_ckpts[index], self.last_ckpts[index]
+        begin_file, complex_file, last_file = self.begin_files[index], self.complex_files[index], self.last_files[index]
 
-        begin_ckpt_name = (begin_ckpt.split('/')[-1]).strip()
-        complex_ckpt_name = (complex_ckpt.split('/')[-1]).strip()
-        last_ckpt_name = (last_ckpt.split('/')[-1]).strip()
-        assert begin_ckpt_name == complex_ckpt_name
-        assert begin_ckpt_name == last_ckpt_name
-
-        complex_ckpt = torch.load(complex_ckpt, 'cpu')
+        ckpt = torch.load(complex_file, 'cpu')
         
-        input = (complex_ckpt['conv1.weight'].data, complex_ckpt['conv2.weight'].data,
-                complex_ckpt['bn1.weight'].data, complex_ckpt['bn1.bias'].data, complex_ckpt['bn1.running_mean'].data, complex_ckpt['bn1.running_var'].data,
-                complex_ckpt['bn2.weight'].data, complex_ckpt['bn2.bias'].data, complex_ckpt['bn2.running_mean'].data, complex_ckpt['bn2.running_var'].data)
+        input = [ckpt['conv1.weight'].data, ckpt['conv2.weight'].data,
+                ckpt['bn1.weight'].data, ckpt['bn1.bias'].data, ckpt['bn1.running_mean'].data, ckpt['bn1.running_var'].data,
+                ckpt['bn2.weight'].data, ckpt['bn2.bias'].data, ckpt['bn2.running_mean'].data, ckpt['bn2.running_var'].data]
         
-        return begin_ckpt, input, last_ckpt
+        return begin_file, input, last_file
 
     def __len__(self):
-        return len(self.begin_ckpts)
+        return len(self.begin_files)

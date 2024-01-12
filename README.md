@@ -1,5 +1,9 @@
 #  Knowledge Translation: A New Pathway for Model Compression
 
+## Paper
+
+Under review. Preprint at [arXiv](https://arxiv.org/abs/2401.05772).
+
 
 
 ## Environment
@@ -59,5 +63,10 @@ python train.py --gpu_id 0 \
 
 If you find this repository useful, please consider citing the following paper:
 ```
-TBD
+@article{sun2024knowledge,
+  title={Knowledge Translation: A New Pathway for Model Compression},
+  author={Sun, Wujie and Chen, Defang and Chen, Jiawei and Feng, Yan and Chen, Chun and Wang, Can},
+  journal={arXiv preprint arXiv:2401.05772},
+  year={2024}
+}
 ```
