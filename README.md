@@ -38,7 +38,7 @@ Python 3.9.16, torch 2.0.1
 
 2. Run `nohup sh run.sh &` to generate training dataset.
 
-3. Similiarly, generate validation dataset using the **construct_val.py** file.
+3. Similarly, generate validation dataset using the **construct_val.py** file.
 
 
 
